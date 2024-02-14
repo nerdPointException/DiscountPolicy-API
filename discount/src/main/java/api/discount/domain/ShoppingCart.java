@@ -1,41 +1,36 @@
 package api.discount.domain;
 
-import api.discount.domain.discountPolicy.DiscountPolicy;
 import api.discount.model.Money;
 import jakarta.persistence.*;
 import lombok.Getter;
 
-import java.util.List;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
-public class ShoppingCart implements DiscountableChecker {
+public class ShoppingCart {
 
     @Id
     @GeneratedValue
     @Column(name = "shopping_cart_id")
     private Long id;
 
-    @OneToMany
-    @JoinColumn(name = "shopping_cart_item_id")
-    private List<ShoppingCartItem> shoppingCartItemList;
+    private BigDecimal fullPrice = BigDecimal.ZERO;
+    @Column(updatable = false)
+    private LocalDateTime orderDateTime;
 
-    public Money getFullDiscountedPrice() {
-        Money fullPrice = Money.ZERO;
-
-        for (ShoppingCartItem shoppingCartItem : shoppingCartItemList) {
-            fullPrice.plus(shoppingCartItem.getItemsPrice());
-        }
-        Money discountedAmount = Money.ZERO;
-
-        for (DiscountPolicy discountPolicy : hasDiscountPolicy()) {
-            discountedAmount = discountPolicy.discountedAmount(this);
-        }
-
-        return fullPrice.minus(discountedAmount);
+    // ==== 생성자 ==== //
+    public ShoppingCart() {
+        this.orderDateTime = LocalDateTime.now();
     }
-    @Override
-    public List<DiscountPolicy> hasDiscountPolicy() {
-        return null;
+
+    // ==== 편의 메서드 ==== //
+    public void addPrice(Money money) {
+        this.fullPrice = this.fullPrice.add(money.getAmount());
+    }
+
+    public Money getFullPrice() {
+        return Money.wons(this.fullPrice);
     }
 }

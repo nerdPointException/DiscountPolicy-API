@@ -1,18 +1,18 @@
 package api.discount.domain;
 
-import api.discount.domain.discountPolicy.DiscountPolicy;
 import api.discount.model.Money;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
-@Getter
+@Getter @Setter
 public class Item {
 
     @Id
@@ -20,9 +20,11 @@ public class Item {
     @Column(name = "item_id")
     private Long id;
 
+    private String name;
     private BigDecimal price;
 
-    public Money getDiscountedPrice() {
-        return new Money(price);
+    public Money getPrice() {
+        return Money.wons(price);
     }
+
 }

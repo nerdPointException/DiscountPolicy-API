@@ -1,26 +1,23 @@
 package api.discount.domain.discountPolicy;
 
-import api.discount.domain.DiscountableChecker;
 import api.discount.domain.Item;
+import api.discount.domain.ShoppingCartItem;
 import api.discount.model.Money;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 
 @Entity
 @DiscriminatorValue("amount")
-@Getter
+@Getter @Setter
 public class AmountDiscount extends DiscountType {
 
     private BigDecimal amount;
 
-    @OneToOne
-    @JoinColumn(name = "item_id")
-    private Item item;
-
     @Override
-    public Money discountedPrice(DiscountableChecker target) {
-        return null;
+    public Money getDiscountType(ShoppingCartItem target) {
+        return Money.wons(amount).times(target.getCount());
     }
 }

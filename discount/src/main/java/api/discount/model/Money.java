@@ -1,7 +1,5 @@
 package api.discount.model;
 
-import lombok.Getter;
-
 import java.math.BigDecimal;
 
 public class Money {
@@ -10,20 +8,28 @@ public class Money {
 
     private final BigDecimal amount;
 
-    // 생성자
-    public Money(BigDecimal amount) {
+    // ==== 생성자 ==== //
+    protected Money(BigDecimal amount) {
         this.amount = amount;
     }
 
     public static Money wons(long amount) {
         return new Money(BigDecimal.valueOf(amount));
     }
+    public static Money wons(BigDecimal amount) {
+        return new Money(amount);
+    }
 
     public static Money wons(double amount) {
         return new Money(BigDecimal.valueOf(amount));
     }
 
-    // 연산자
+    // ===== 접근자 ==== //
+    public BigDecimal getAmount() {
+        return this.amount;
+    }
+
+    // ==== 연산자 ==== //
     public Money plus(Money amount) {
         return new Money(this.amount.add(amount.amount));
     }
