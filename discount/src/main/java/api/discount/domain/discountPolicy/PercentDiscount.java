@@ -6,7 +6,7 @@ import api.discount.model.Money;
 public class PercentDiscount extends DiscountType{
 
     @Override
-    public Money getDiscountType(ShoppingCartItem target) {
+    public Money getDiscountType(ShoppingCartItem target, Money discountRange) {
         return null;
     }
 }

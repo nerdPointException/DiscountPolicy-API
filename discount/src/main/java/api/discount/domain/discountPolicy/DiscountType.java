@@ -16,5 +16,5 @@ abstract public class DiscountType {
     @Column(name = "discount_type_id")
     private Long id;
 
-    public abstract Money getDiscountType(ShoppingCartItem target);
+    public abstract Money getDiscountType(ShoppingCartItem target, Money discountRange);
 }

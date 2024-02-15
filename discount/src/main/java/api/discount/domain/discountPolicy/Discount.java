@@ -3,13 +3,13 @@ package api.discount.domain.discountPolicy;
 import api.discount.domain.ShoppingCartItem;
 import api.discount.model.Money;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import static jakarta.persistence.FetchType.LAZY;
 
+@Getter
 @Entity
-@Getter @Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Discount extends DiscountPolicy {
 
     @Id
@@ -27,6 +27,14 @@ public class Discount extends DiscountPolicy {
     @JoinColumn(name = "discount_type_id")
     private DiscountType discountType;
 
+    // ==== 생성자 ==== //
+    @Builder
+    public Discount(String policyName, DiscountCondition discountCondition, DiscountType discountType) {
+        this.policyName = policyName;
+        this.discountCondition = discountCondition;
+        this.discountType = discountType;
+    }
+
     // ==== 비즈니스 로직 ==== //
     @Override
     public Money getDiscountAmount(ShoppingCartItem target) {
@@ -35,7 +43,7 @@ public class Discount extends DiscountPolicy {
 
         if (discountCondition.isSatisfying(target)) {
             Money discountRange = discountCondition.decideDiscountRange(target);
-            return discountType.getDiscountType(target);
+            return discountType.getDiscountType(target, discountRange);
         }
 
         return discountAmount;

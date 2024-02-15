@@ -5,22 +5,28 @@ import api.discount.domain.ShoppingCartItem;
 import api.discount.domain.discountPolicy.DiscountCondition;
 import api.discount.model.Money;
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Objects;
 
 import static jakarta.persistence.FetchType.LAZY;
 
+@Getter
 @Entity
 @DiscriminatorValue("single_item")
-@Getter @Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class SingleItem extends DiscountCondition {
 
     @OneToOne(fetch = LAZY)
     @JoinColumn(name = "item_id")
     private Item item;
 
+    public SingleItem(Item item) {
+        this.item = item;
+    }
 
     @Override
     protected boolean isSatisfying(ShoppingCartItem target) {

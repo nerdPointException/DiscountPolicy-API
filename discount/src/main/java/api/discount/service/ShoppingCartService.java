@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class ShoppingCartService {
 
     private final ItemRepository itemRepository;
+    private final DiscountPolicyService discountPolicyService;
     private final ShoppingCartRepository shoppingCartRepository;
     private final ShoppingCartItemRepository shoppingCartItemRepository;
 
