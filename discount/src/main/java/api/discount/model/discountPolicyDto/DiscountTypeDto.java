@@ -1,6 +1,5 @@
 package api.discount.model.discountPolicyDto;
 
-import api.discount.domain.discountPolicy.AmountDiscount;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.ToString;

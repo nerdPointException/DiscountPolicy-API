@@ -1,12 +1,12 @@
 package api.discount.domain.discountPolicy;
 
-import api.discount.domain.ShoppingCartItem;
+import api.discount.domain.OrderItem;
 import api.discount.model.Money;
 
 public class PercentDiscount extends DiscountType{
 
     @Override
-    public Money getDiscountType(ShoppingCartItem target, Money discountRange) {
+    public Money getDiscountType(OrderItem target, Money discountRange) {
         return null;
     }
 }

@@ -1,14 +1,13 @@
 package api.discount.domain.discountPolicy.discountCondition;
 
 import api.discount.domain.Item;
-import api.discount.domain.ShoppingCartItem;
+import api.discount.domain.OrderItem;
 import api.discount.domain.discountPolicy.DiscountCondition;
 import api.discount.model.Money;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.util.Objects;
 
@@ -29,12 +28,12 @@ public class SingleItem extends DiscountCondition {
     }
 
     @Override
-    protected boolean isSatisfying(ShoppingCartItem target) {
+    protected boolean isSatisfying(OrderItem target) {
         return Objects.equals(target.getItem().getId(), item.getId());
     }
 
     @Override
-    public Money decideDiscountRange(ShoppingCartItem target) {
+    public Money decideDiscountRange(OrderItem target) {
         return target.getItem().getPrice();
     }
 

@@ -3,17 +3,19 @@ package api.discount.domain;
 import api.discount.model.Money;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "orders")
 @Getter
-public class ShoppingCart {
+public class Order {
 
     @Id
     @GeneratedValue
-    @Column(name = "shopping_cart_id")
+    @Column(name = "orders_id")
     private Long id;
 
     private BigDecimal fullPrice = BigDecimal.ZERO;
@@ -21,7 +23,7 @@ public class ShoppingCart {
     private LocalDateTime orderDateTime;
 
     // ==== 생성자 ==== //
-    public ShoppingCart() {
+    public Order() {
         this.orderDateTime = LocalDateTime.now();
     }
 

@@ -1,6 +1,6 @@
 package api.discount.domain.discountPolicy;
 
-import api.discount.domain.ShoppingCartItem;
+import api.discount.domain.OrderItem;
 import api.discount.model.Money;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -16,8 +16,8 @@ public abstract class DiscountCondition {
     @Column(name = "discount_condition_id")
     private Long id;
 
-    protected abstract boolean isSatisfying(ShoppingCartItem target);
+    protected abstract boolean isSatisfying(OrderItem target);
 
-    public abstract Money decideDiscountRange(ShoppingCartItem target);
+    public abstract Money decideDiscountRange(OrderItem target);
 
 }

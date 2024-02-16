@@ -14,16 +14,16 @@ import static jakarta.persistence.FetchType.LAZY;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class ShoppingCartItem {
+public class OrderItem {
 
     @Id
     @GeneratedValue
-    @Column(name = "shopping_cart_item_id")
+    @Column(name = "orders_item_id")
     private Long id;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "shopping_cart_id")
-    private ShoppingCart shoppingCart;
+    @JoinColumn(name = "orders_id")
+    private Order order;
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "item_id")
@@ -34,15 +34,15 @@ public class ShoppingCartItem {
 
     // ==== 생성자 ==== //
     @Builder
-    public ShoppingCartItem(ShoppingCart shoppingCart, Item item, Money singleItemPrice, int count) {
-        this.shoppingCart = shoppingCart;
+    public OrderItem(Order order, Item item, Money singleItemPrice, int count) {
+        this.order = order;
         this.item = item;
         this.count = count;
         this.singleItemPrice = singleItemPrice.getAmount();
 
         item.minusQuantity(count);
         Money addMoney = getOrderPrice(singleItemPrice);
-        shoppingCart.changePrice(addMoney);
+        order.changePrice(addMoney);
     }
 
     // ==== 편의 메서드 ==== //
@@ -67,7 +67,7 @@ public class ShoppingCartItem {
         Money afterMoney = getOrderPrice(Money.wons(this.singleItemPrice));
 
         Money diff = beforeMoney.minus(afterMoney);
-        shoppingCart.changePrice(diff);
+        order.changePrice(diff);
     }
 
     /**

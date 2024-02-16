@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Slf4j
@@ -19,10 +20,10 @@ public class ItemService {
     private final ItemRepository itemRepository;
 
     @Transactional
-    public void saveItem(String name, Money price, int stockQuantity) {
+    public void saveItem(String name, BigDecimal price, int stockQuantity) {
         Item item = Item.builder()
                 .name(name)
-                .price(price)
+                .price(Money.wons(price))
                 .stockQuantity(stockQuantity)
                 .build();
 
@@ -37,12 +38,12 @@ public class ItemService {
         savedItem.updateItem(name, price, stockQuantity);
     }
 
-    private Item findOne(Long itemId) {
+    public Item findOne(Long itemId) {
         return itemRepository.findById(itemId)
                 .orElse(null);
     }
 
-    private List<Item> findAll() {
+    public List<Item> findAll() {
         return itemRepository.findAll()
                 .stream().toList();
     }

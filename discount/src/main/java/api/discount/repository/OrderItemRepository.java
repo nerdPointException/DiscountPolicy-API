@@ -1,9 +1,9 @@
 package api.discount.repository;
 
-import api.discount.domain.ShoppingCartItem;
+import api.discount.domain.OrderItem;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ShoppingCartItemRepository extends JpaRepository<ShoppingCartItem, Long> {
+public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
 }
